@@ -17,6 +17,7 @@ File: bintree.h
 using std::cout;
 using std::endl;
 using std::string;
+using std::max;
 
 class BinTree {
 public:
@@ -50,10 +51,11 @@ private:
     DataNode *root;
     int count;
 
+    DataNode* minValueNode(DataNode*);
     //overloaded tree management
     void clear(DataNode*);
     bool addNode(DataNode*, DataNode**);
-    bool removeNode(int, DataNode*);
+    DataNode* removeNode(int, DataNode*);
     bool getNode(Data*, int, DataNode*);
     bool contains(int, DataNode*);
     int getHeight(DataNode*);
