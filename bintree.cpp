@@ -35,7 +35,23 @@ bool BinTree::getRootData(Data *data) {
 }
 
 void BinTree::displayTree() {
-    return;
+    cout << "DISPLAY TREE\n" << string(46,'=') << endl;
+    if (root == NULL) {
+      cout << "Tree is empty" << endl;
+    }
+    else {
+        cout << "Tree is NOT empty" << endl;
+    }
+    cout << "Height " << getHeight() << endl;
+    cout << "Node count " << getCount() << endl;
+
+    cout << "\nPre-Order Traversal" << endl;
+    displayPreOrder();
+    cout << "\nIn-Order Traversal" << endl;
+    displayInOrder();
+    cout << "\nPost-Order Traversal" << endl;
+    displayPostOrder();
+    cout << "\n" << string(46,'=') << endl << endl;
 }
 
 void BinTree::clear() {
@@ -44,7 +60,7 @@ void BinTree::clear() {
 
 //public methods
 bool BinTree::addNode(int id, const string *info) {
-  return 0;
+    return 0;
 }
 
 bool BinTree::removeNode(int id) {
@@ -60,7 +76,7 @@ bool BinTree::contains(int id) {
 }
 
 int BinTree::getHeight() {
-    return;
+    return getHeight(root);
 }
 
 void BinTree::displayPreOrder() {
@@ -97,7 +113,18 @@ bool BinTree::contains(int id, DataNode *temproot) {
 }
 
 int BinTree::getHeight(DataNode* temproot) {
-    return;
+    int lh = 0, rh = 0;
+    if (temproot != NULL) {
+        if (temproot->left != NULL) {
+            getHeight(temproot->left);
+            lh++;
+        }
+        if (temproot->right != NULL) {
+            getHeight(temproot->right);
+            rh++;
+        }
+    }
+    return temproot == NULL ? 0 : max(lh, rh) + 1;
 }
 
 void BinTree::displayPreOrder(DataNode *temproot) {
@@ -110,4 +137,12 @@ void BinTree::displayPostOrder(DataNode *temproot) {
 
 void BinTree::displayInOrder(DataNode *temproot) {
     return;
+}
+
+DataNode* BinTree::minValueNode(DataNode* node) {
+    DataNode* current = node;
+    while (current && current->left != NULL) {
+        current = current->left;
+    }
+    return current;
 }
