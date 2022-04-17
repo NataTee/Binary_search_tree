@@ -31,15 +31,17 @@ int BinTree::getCount() {
 }
 
 bool BinTree::getRootData(Data *data) {
+  bool found = false;
   if (root != NULL) {
       data->id = root->data.id;
       data->information = root->data.information;
+      found = true;
   }
   else {
       data->id = -1;
       data->information = "";
   }
-  return data;
+  return found;
 }
 
 void BinTree::displayTree() {
