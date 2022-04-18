@@ -70,7 +70,19 @@ void BinTree::clear() {
 
 //public methods
 bool BinTree::addNode(int id, const string *info) {
-    return 0;
+    bool added = false;
+    if(id > 0 && *info != "") {
+        DataNode *newNode = new DataNode;
+        newNode->data.id = id;
+        newNode->data.information = *info;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        if (addNode(newNode, &root)) {
+            added = true;
+            count++;
+        }
+    }
+    return added;
 }
 
 bool BinTree::removeNode(int id) {
@@ -120,8 +132,26 @@ void BinTree::clear(DataNode*) {
 }
 
 //overloaded methods
-bool BinTree::addNode(DataNode *newNode, DataNode **root) {
-    return 0;
+bool BinTree::addNode(DataNode *newNode, DataNode **temproot) {
+    bool added = false;
+    if (!(*temproot)) {
+        *temproot = newNode;
+        (*temproot)->data.id = newNode->data.id;
+        (*temproot)->data.information = newNode->data.information;
+        (*temproot)->left = NULL;
+        (*temproot)->right = NULL;
+        added = true;
+    }
+    else {
+        if(newNode->data.id < (*temproot)->data.id) {
+            addNode(newNode, &(*temproot)->left);
+        }
+        if(newNode->data.id > (*temproot)->data.id) {
+            addNode(newNode, &(*temproot)->right);
+        }
+        added = true;
+    }
+    return added;
 }
 
 DataNode *BinTree::removeNode(int id, DataNode *temproot) {
