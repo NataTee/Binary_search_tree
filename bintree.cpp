@@ -249,6 +249,15 @@ void BinTree::displayPostOrder(DataNode *temproot) {
 }
 
 void BinTree::displayInOrder(DataNode *temproot) {
+    if (temproot) {
+        if (temproot->left) {
+            displayInOrder(temproot->left);
+        }
+        cout << temproot->data.id << " " << temproot->data.information << endl;
+        if (temproot->right) {
+            displayInOrder(temproot->right);
+        }
+    }
     return;
 }
 
