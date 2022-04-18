@@ -67,6 +67,7 @@ void BinTree::displayTree() {
 //public methods
 void BinTree::clear() {
     clear(root);
+    count = 0;
 }
 
 bool BinTree::addNode(int id, const string *info) {
@@ -134,10 +135,10 @@ void BinTree::clear(DataNode *temproot) {
         clear(temproot->right);
         temproot->left = NULL;
         temproot->right = NULL;
-        temproot = NULL;
         delete temproot;
     }
-    count = 0;
+    root = NULL;
+    return;
 }
 
 bool BinTree::addNode(DataNode *newNode, DataNode **temproot) {
@@ -205,10 +206,10 @@ bool BinTree::getNode(Data *tempdata, int id, DataNode *temproot) {
         }
         else {
             if (id < temproot->data.id) {
-                (getNode(tempdata, id, temproot->left));
+                found = getNode(tempdata, id, temproot->left);
             }
             if (id > temproot->data.id) {
-                (getNode(tempdata, id, temproot->right));
+                found = getNode(tempdata, id, temproot->right);
             }
         }
     }
@@ -216,25 +217,28 @@ bool BinTree::getNode(Data *tempdata, int id, DataNode *temproot) {
 }
 
 bool BinTree::contains(int id, DataNode *temproot) {
-    bool found = false;
+    bool found;
     if (temproot != NULL) {
         if (temproot->data.id == id) {
             found = true;
         }
         else {
             if (id < temproot->data.id) {
-                (contains(id, temproot->left));
+                found = contains(id, temproot->left);
             }
             if (id > temproot->data.id) {
-                (contains(id, temproot->right));
+                found = contains(id, temproot->right);
             }
         }
+    }
+    else {
+        found = false;
     }
     return found;
 }
 
 int BinTree::getHeight(DataNode* temproot) {
-    int lh = 0, rh = 0;
+    int lh = 0, rh = 0, height = 0;
     if (temproot != NULL) {
         if (temproot->left != NULL) {
             lh = getHeight(temproot->left);
@@ -242,8 +246,9 @@ int BinTree::getHeight(DataNode* temproot) {
         if (temproot->right != NULL) {
             rh = getHeight(temproot->right);
         }
+        height = lh > rh ? lh + 1 : rh + 1;
     }
-    return lh > rh ? lh + 1 : rh + 1;
+    return height;
 }
 
 void BinTree::displayPreOrder(DataNode *temproot) {
