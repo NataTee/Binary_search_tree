@@ -64,11 +64,11 @@ void BinTree::displayTree() {
     cout << "\n" << string(46,'=') << endl << endl;
 }
 
+//public methods
 void BinTree::clear() {
     clear(root);
 }
 
-//public methods
 bool BinTree::addNode(int id, const string *info) {
     bool added = false;
     if(id > 0 && *info != "") {
@@ -127,11 +127,19 @@ void BinTree::displayInOrder() {
     displayInOrder(root);
 }
 
-void BinTree::clear(DataNode*) {
-
+//private overloads
+void BinTree::clear(DataNode *temproot) {
+    if (temproot != NULL) {
+        clear(temproot->left);
+        clear(temproot->right);
+        temproot->left = NULL;
+        temproot->right = NULL;
+        temproot = NULL;
+        delete temproot;
+    }
+    count = 0;
 }
 
-//overloaded methods
 bool BinTree::addNode(DataNode *newNode, DataNode **temproot) {
     bool added = false;
     if (!(*temproot)) {
@@ -229,15 +237,13 @@ int BinTree::getHeight(DataNode* temproot) {
     int lh = 0, rh = 0;
     if (temproot != NULL) {
         if (temproot->left != NULL) {
-            getHeight(temproot->left);
-            lh++;
+            lh = getHeight(temproot->left);
         }
         if (temproot->right != NULL) {
-            getHeight(temproot->right);
-            rh++;
+            rh = getHeight(temproot->right);
         }
     }
-    return temproot == NULL ? 0 : max(lh, rh) + 1;
+    return lh > rh ? lh + 1 : rh + 1;
 }
 
 void BinTree::displayPreOrder(DataNode *temproot) {
